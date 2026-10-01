@@ -2,6 +2,7 @@ node_modules
 .next
 functions/lib/
 *.log
+*.tsbuildinfo
 .env
 firestore-debug.log
 firebase-debug.log
