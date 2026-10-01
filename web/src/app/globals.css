@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.grid {
+.training-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-.card {
+.training-card {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 16px;

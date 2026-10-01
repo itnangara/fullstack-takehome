@@ -7,7 +7,7 @@
     "status": "published",
     "order": 1,
     "durationMinutes": 25,
-    "thumbnailUrl": "/brand/bayer-logo.svg"
+    "thumbnailUrl": "/thumbs/t-central-line.png"
   },
   {
     "id": "t-contrast",
@@ -17,7 +17,7 @@
     "status": "published",
     "order": 2,
     "durationMinutes": 15,
-    "thumbnailUrl": "/brand/bayer-logo.svg"
+    "thumbnailUrl": "/thumbs/t-contrast.png"
   },
   {
     "id": "t-draft",
@@ -27,7 +27,7 @@
     "status": "draft",
     "order": 3,
     "durationMinutes": 10,
-    "thumbnailUrl": "/brand/bayer-logo.svg"
+    "thumbnailUrl": "/thumbs/t-draft.png"
   },
   {
     "id": "t-cpr",
@@ -37,6 +37,6 @@
     "status": "published",
     "order": 1,
     "durationMinutes": 40,
-    "thumbnailUrl": "/brand/corpuls-logo.svg"
+    "thumbnailUrl": "/thumbs/t-cpr.png"
   }
 ]

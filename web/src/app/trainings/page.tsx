@@ -22,9 +22,9 @@ export default function TrainingsPage() {
   return (
     <main style={{ padding: 24 }}>
       <h1 className="text-2xl font-semibold">Trainings</h1>
-      <div className="grid">
+      <div className="training-grid">
         {trainings.map((t: TrainingSummary) => (
-          <div className="card" key={t.id}>
+          <div className="training-card" key={t.id}>
             <img src={t.thumbnailUrl} width="320" height="180" />
             <h2>{t.title}</h2>
             <p dangerouslySetInnerHTML={{ __html: t.description }} />
