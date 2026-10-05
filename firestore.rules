@@ -2,20 +2,33 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function ownsSession(data) {
+      return request.auth != null
+        && data.userId == request.auth.uid
+        && data.tenantId == request.auth.token.tenantId;
+    }
 
     match /trainings/{trainingId} {
-      allow read: if request.auth != null;
+      allow read: if request.auth != null
+        && resource.data.tenantId == request.auth.token.tenantId
+        && resource.data.status == 'published';
       allow write: if false;
     }
 
-    // TODO(candidate): see ASSIGNMENT.md Task 2.
     match /sessions/{sessionId} {
-      allow read, write: if request.auth != null;
+      allow read, delete: if ownsSession(resource.data);
+      allow create: if ownsSession(request.resource.data)
+        && request.resource.data.keys().hasAll(['tenantId', 'userId', 'trainingId', 'progress', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['tenantId', 'userId', 'trainingId', 'progress', 'updatedAt']);
+      // Backend-owned score and session identity are immutable to clients.
+      allow update: if ownsSession(resource.data)
+        && ownsSession(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['progress', 'updatedAt']);
     }
 
     match /tenants/{tenantId} {
       allow read: if request.auth != null
-                  && request.auth.token.tenantId == tenantId;
+        && request.auth.token.tenantId == tenantId;
       allow write: if false;
     }
   }
