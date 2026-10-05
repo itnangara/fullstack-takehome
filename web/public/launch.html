@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Launch Training</title>
   <link rel="stylesheet" href="/launch.css">
+  <script src="/launch.js" defer></script>
 </head>
 <body>
-  <div class="header">
-    <img src="/brand/bayer-logo.svg" class="logo">
-    <div class="header-title">Bayer Radiology Academy</div>
-  </div>
+  <header class="header">
+    <img src="/brand/medverse-logo.svg" class="logo" id="tenantLogo" alt="Medverse Demo Clinic" width="140" height="28">
+    <div class="header-title" id="tenantName">Medverse Demo Clinic</div>
+  </header>
 
-  <div class="panel">
-    <div class="panel-title">You are about to start</div>
-    <div class="training-name" id="trainingName"></div>
-    <div class="training-meta" id="trainingMeta"></div>
+  <main class="panel">
+    <p class="panel-title">You are about to start</p>
+    <h1 class="training-name" id="trainingName">Training</h1>
+    <p class="training-meta" id="trainingMeta"></p>
 
-    <div class="hint">
+    <p class="hint">
       This training runs in a streamed session. Keep this tab open until it loads.
+    </p>
+    <p class="hint" id="launchStatus" role="status" aria-live="polite"></p>
+
+    <div class="actions">
+      <button type="button" class="button" id="startTraining" disabled>Start training</button>
+      <button type="button" class="button-secondary" id="back">Back</button>
     </div>
+    <noscript><p>JavaScript is required to select your hospital’s branding and start this training.</p></noscript>
+  </main>
 
-    <div class="button" onclick="startTraining()">Start training</div>
-    <div class="button-secondary" onclick="history.back()">Back</div>
-  </div>
-
-  <div class="footer">© Medverse GmbH</div>
-
-  <script src="/launch.js"></script>
+  <footer class="footer">© Medverse GmbH</footer>
 </body>
 </html>

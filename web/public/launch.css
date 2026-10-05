@@ -1,13 +1,15 @@
-/* Design tokens. Today: one tenant. */
+/* Neutral demo defaults; tenant configuration overrides only these tokens. */
 :root {
-  --brand: #10384f;
-  --brand-fg: #ffffff;
+  --brand: #ffd400;
+  --brand-fg: #1a1a1a;
   --surface: #ffffff;
   --text-primary: #1a1a1a;
-  --text-secondary: #8a8a8a;
-  --font-family: "Helvetica Neue", Arial, sans-serif;
-  --radius: 4px;
+  --text-secondary: #6b6b6b;
+  --font-family: Inter, system-ui, sans-serif;
+  --radius: 2px;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -19,45 +21,53 @@ body {
 .header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
-  padding: 16px 32px;
-  background: #10384f;
-  color: #ffffff;
+  padding: 16px clamp(16px, 4vw, 32px);
+  background: var(--brand);
+  color: var(--brand-fg);
 }
 
-.logo { height: 28px; }
-
-.header-title { font-size: 18px; font-weight: 600; }
+.logo { height: 28px; width: 140px; object-fit: contain; }
+.header-title { font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
 
 .panel {
-  width: 640px;
-  margin: 48px auto;
-  padding: 32px;
+  width: min(640px, calc(100% - 32px));
+  margin: 32px auto;
+  padding: clamp(16px, 4vw, 32px);
   background: var(--surface);
   border-radius: var(--radius);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  overflow-wrap: anywhere;
 }
 
-.panel-title { font-size: 13px; color: #8a8a8a; text-transform: uppercase; }
+.panel-title { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; }
 .training-name { font-size: 26px; font-weight: 700; margin: 4px 0 8px; }
-.training-meta { color: #8a8a8a; font-size: 14px; }
-.hint { margin: 24px 0; font-size: 14px; color: #8a8a8a; }
+.training-meta { color: var(--text-secondary); font-size: 14px; }
+.hint { margin: 24px 0; font-size: 14px; color: var(--text-secondary); }
+.hint:empty { display: none; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+button { font: inherit; border: 0; }
 
 .button {
-  display: inline-block;
   padding: 12px 24px;
-  background: #10384f;
-  color: #ffffff;
+  background: var(--brand);
+  color: var(--brand-fg);
   border-radius: var(--radius);
   cursor: pointer;
   font-weight: 600;
 }
 
+.button:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .button-secondary {
-  display: inline-block;
   padding: 12px 24px;
-  color: #8a8a8a;
+  color: var(--text-primary);
+  background: transparent;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
-.footer { text-align: center; color: #8a8a8a; font-size: 12px; padding: 32px; }
+button:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 4px; }
+.footer { text-align: center; color: var(--text-secondary); font-size: 12px; padding: 32px; }
