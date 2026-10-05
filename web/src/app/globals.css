@@ -2,14 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+.catalog {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
 .training-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
+  list-style: none;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .training-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .training-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .training-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 16px;
+  overflow-wrap: anywhere;
+}
+
+.training-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.training-link {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 16px;
+  color: #10384f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 3px solid #10384f;
+  outline-offset: 4px;
 }

@@ -1,19 +1,38 @@
+import "server-only";
+
 export interface TrainingSummary {
-  id: string;
-  title: string;
-  description: string;
-  durationMinutes: number;
-  thumbnailUrl: string;
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly durationMinutes: number;
+  readonly thumbnailUrl: string;
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5001/api";
+function isTraining(value: unknown): value is TrainingSummary {
+  if (value === null || typeof value !== "object") return false;
+  return "id" in value && typeof value.id === "string" && value.id.length > 0
+    && "title" in value && typeof value.title === "string"
+    && "description" in value && typeof value.description === "string"
+    && "durationMinutes" in value && typeof value.durationMinutes === "number"
+    && Number.isFinite(value.durationMinutes) && value.durationMinutes >= 0
+    && "thumbnailUrl" in value && typeof value.thumbnailUrl === "string";
+}
 
+/** Called only on the server; authenticated responses must never enter a shared cache. */
 export async function fetchTrainings(idToken: string): Promise<TrainingSummary[]> {
-  const res = await fetch(`${API_BASE}/trainings?key=${process.env.NEXT_PUBLIC_MEDVERSE_API_KEY}`, {
+  const endpoint = process.env.MEDVERSE_TRAININGS_URL?.trim();
+  if (!endpoint) throw new Error("MEDVERSE_TRAININGS_URL is required");
+  const res = await fetch(endpoint, {
     headers: { authorization: `Bearer ${idToken}` },
     cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
   });
   if (!res.ok) throw new Error("Failed to load trainings");
-  const body = await res.json();
+
+  const body: unknown = await res.json();
+  if (body === null || typeof body !== "object" || !("data" in body)
+    || !Array.isArray(body.data) || !body.data.every(isTraining)) {
+    throw new Error("Invalid trainings response");
+  }
   return body.data;
 }
