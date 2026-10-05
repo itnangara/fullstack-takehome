@@ -3,8 +3,6 @@ import type { AuthContext } from "../src/core/auth.js";
 import type { TrainingDoc } from "../src/features/trainings/types.js";
 
 vi.mock("../src/features/trainings/repository.js", () => ({
-  getTrainingById: vi.fn(),
-  listTrainingIdsForTenant: vi.fn(),
   queryTrainings: vi.fn(),
 }));
 
@@ -35,10 +33,6 @@ function givenTrainings(docs: TrainingDoc[]): void {
         (!filter.tenantId || d.tenantId === filter.tenantId) &&
         (!filter.status || d.status === filter.status),
     ),
-  );
-  vi.mocked(repository.listTrainingIdsForTenant).mockResolvedValue(docs.map((d) => d.id));
-  vi.mocked(repository.getTrainingById).mockImplementation(
-    async (id: string) => docs.find((d) => d.id === id) ?? null,
   );
 }
 
@@ -85,10 +79,10 @@ describe("listTrainings", () => {
 
     expect(result).not.toHaveProperty("tenantId");
     expect(result).not.toHaveProperty("status");
+    expect(result).not.toHaveProperty("order");
   });
 
-  // TODO(candidate): unskip me. See ASSIGNMENT.md Task 1.
-  it.skip("listTrainings_trainingOfAnotherTenant_isNeverReturned", async () => {
+  it("listTrainings_trainingOfAnotherTenant_isNeverReturned", async () => {
     givenTrainings([
       training({ id: "t1", tenantId: "hospital-a" }),
       training({ id: "t9", tenantId: "hospital-b", title: "Other Hospital Only" }),

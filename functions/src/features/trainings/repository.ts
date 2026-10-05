@@ -1,5 +1,5 @@
 import { getFirestore } from "firebase-admin/firestore";
-import type { TrainingDoc } from "./types.js";
+import type { TrainingDoc, TrainingStatus } from "./types.js";
 
 const COLLECTION = "trainings";
 
@@ -33,7 +33,7 @@ export async function listTrainingIdsForTenant(tenantId: string): Promise<string
 
 export interface TrainingQuery {
   readonly tenantId?: string;
-  readonly status?: string;
+  readonly status?: TrainingStatus;
 }
 
 export async function queryTrainings(filter: TrainingQuery): Promise<TrainingDoc[]> {
