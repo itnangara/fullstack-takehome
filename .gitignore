@@ -6,3 +6,7 @@ functions/lib/
 .env
 firestore-debug.log
 firebase-debug.log
+
+.env.*
+!.env.example
+coverage/

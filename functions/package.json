@@ -2,11 +2,14 @@
   "name": "functions",
   "private": true,
   "type": "module",
-  "engines": { "node": "22" },
+  "engines": {
+    "node": "22"
+  },
   "scripts": {
     "build": "tsc",
-    "test": "vitest run tests/trainings.service.test.ts",
-    "test:rules": "firebase emulators:exec --only firestore --config ../firebase.json \"vitest run tests/rules.test.ts\""
+    "test": "vitest run --exclude tests/rules.test.ts",
+    "test:rules": "firebase emulators:exec --only firestore --config ../firebase.json \"vitest run tests/rules.test.ts\"",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "firebase-admin": "^13.0.0",
